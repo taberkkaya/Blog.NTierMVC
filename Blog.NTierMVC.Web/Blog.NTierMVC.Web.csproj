@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blog.NTierMVC.Data\Blog.NTierMVC.Data.csproj" />
+    <ProjectReference Include="..\Blog.NTierMVC.Service\Blog.NTierMVC.Service.csproj" />
   </ItemGroup>
 
 </Project>

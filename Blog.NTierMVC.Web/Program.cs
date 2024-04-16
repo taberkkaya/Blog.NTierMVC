@@ -1,10 +1,10 @@
-using Blog.NTierMVC.Data.Context;
 using Blog.NTierMVC.Data.Extensions;
-using Microsoft.EntityFrameworkCore;
+using Blog.NTierMVC.Service.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.LoadDataLayerExtension(builder.Configuration);
+builder.Services.LoadServiceLayerExtension();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
