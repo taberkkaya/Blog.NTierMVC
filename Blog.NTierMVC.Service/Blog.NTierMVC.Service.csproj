@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Blog.NTierMVC.Data\Blog.NTierMVC.Data.csproj" />
+    <ProjectReference Include="..\Blog.NTierMVC.Entity\Blog.NTierMVC.Entity.csproj" />
+  </ItemGroup>
+
 </Project>
