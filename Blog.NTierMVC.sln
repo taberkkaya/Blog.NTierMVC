@@ -3,15 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.NTierMVC.Web", "Blog.NTierMVC.Web\Blog.NTierMVC.Web.csproj", "{8DC02594-B8EE-49DF-AE1E-266BFAEF3619}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.NTierMVC.Web", "Blog.NTierMVC.Web\Blog.NTierMVC.Web.csproj", "{8DC02594-B8EE-49DF-AE1E-266BFAEF3619}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.NTierMVC.Entity", "Blog.NTierMVC.Entity\Blog.NTierMVC.Entity.csproj", "{4AA50800-B3E5-4377-A6E3-7407396B91D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.NTierMVC.Entity", "Blog.NTierMVC.Entity\Blog.NTierMVC.Entity.csproj", "{4AA50800-B3E5-4377-A6E3-7407396B91D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.NTierMVC.Data", "Blog.NTierMVC.Data\Blog.NTierMVC.Data.csproj", "{C36D03BD-F7DF-4996-83E3-9B1D0EA601DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.NTierMVC.Data", "Blog.NTierMVC.Data\Blog.NTierMVC.Data.csproj", "{C36D03BD-F7DF-4996-83E3-9B1D0EA601DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.NTierMVC.Service", "Blog.NTierMVC.Service\Blog.NTierMVC.Service.csproj", "{C05C893D-9AB8-410C-A0F2-94D315F1A942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.NTierMVC.Service", "Blog.NTierMVC.Service\Blog.NTierMVC.Service.csproj", "{C05C893D-9AB8-410C-A0F2-94D315F1A942}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.NTierMVC.Core", "Blog.NTierMVC.Core\Blog.NTierMVC.Core.csproj", "{4A01D548-741F-493F-B523-39520548DCA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.NTierMVC.Core", "Blog.NTierMVC.Core\Blog.NTierMVC.Core.csproj", "{4A01D548-741F-493F-B523-39520548DCA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0DC655B4-5522-4B6F-95D6-D838ACF8D957}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
