@@ -32,6 +32,28 @@ namespace Blog.NTierMVC.Data.Mapping
 
             // Each Role can have many associated RoleClaims
             builder.HasMany<AppRoleClaim>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
+
+            builder.HasData(new AppRole
+            {
+                Id = Guid.Parse("C685C5AB-F989-4372-B46E-0BEA49D44098"),
+                Name = "Superadmin",
+                NormalizedName = "SUPERADMIN",
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            },new AppRole
+            {
+                Id = Guid.Parse("97B28373-BF1C-4188-A833-03379FD3679F"),
+                Name = "Admin",
+                NormalizedName = "ADMIN",
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            },
+            new AppRole
+            {
+                Id = Guid.Parse("5E5B68DD-2512-4600-ADD0-882C842A8B56"),
+                Name = "User",
+                NormalizedName = "USER",
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            }
+            );
         }
     }
 }

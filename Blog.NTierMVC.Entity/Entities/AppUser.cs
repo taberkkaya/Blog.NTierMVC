@@ -9,7 +9,7 @@ namespace Blog.NTierMVC.Entity.Entities
 {
     public class AppUser : IdentityUser<Guid>
     {
-        public string FistName { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
     }
 }
