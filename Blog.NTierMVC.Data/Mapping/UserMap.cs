@@ -75,7 +75,7 @@ namespace Blog.NTierMVC.Data.Mapping
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = false,
                 SecurityStamp = new Guid().ToString(),
-                ImageId = Guid.Parse("644A194E-8811-474C-92E4-796D3140AF23")
+                ImageId = Guid.Parse("CD6083AB-FAA6-4A2C-BFFA-1C01C46A7B71")
             };
 
             superAdmin.PasswordHash = CreatePasswordHash(superAdmin, "123456");
