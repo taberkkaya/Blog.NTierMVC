@@ -57,6 +57,7 @@ namespace Blog.NTierMVC.Data.Mapping
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = true,
                 SecurityStamp = new Guid().ToString(),
+                ImageId = Guid.Parse("644A194E-8811-474C-92E4-796D3140AF23")
             };
 
             superAdmin.PasswordHash = CreatePasswordHash(superAdmin, "123456");
@@ -74,6 +75,7 @@ namespace Blog.NTierMVC.Data.Mapping
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = false,
                 SecurityStamp = new Guid().ToString(),
+                ImageId = Guid.Parse("644A194E-8811-474C-92E4-796D3140AF23")
             };
 
             superAdmin.PasswordHash = CreatePasswordHash(superAdmin, "123456");
