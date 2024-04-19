@@ -13,6 +13,7 @@ namespace Blog.NTierMVC.Data.Context
         }
         public AppDbContext(DbContextOptions options) : base(options)
         {
+
         }
 
         public DbSet<Article> Articles { get; set; }

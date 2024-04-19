@@ -18,7 +18,8 @@ namespace Blog.NTierMVC.Data.Mapping
                 ImageId = Guid.Parse("644A194E-8811-474C-92E4-796D3140AF23"),
                 CreatedBy = "Admin",
                 CreatedDate = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false,
+                UserId = Guid.Parse("CDD65005-D394-4B48-8BA4-C5526518F76F"),
             },
             new Article
             {
@@ -30,7 +31,8 @@ namespace Blog.NTierMVC.Data.Mapping
                 ImageId = Guid.Parse("CD6083AB-FAA6-4A2C-BFFA-1C01C46A7B71"),
                 CreatedBy = "Admin",
                 CreatedDate = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false,
+                UserId = Guid.Parse("5499DD26-468D-4606-BE18-1ABE347582FF"),
             }
             );
         }
