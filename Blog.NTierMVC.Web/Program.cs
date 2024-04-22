@@ -34,7 +34,7 @@ builder.Services.AddIdentity<AppUser, AppRole>(opt =>
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.LoginPath = new PathString("/Admin/Auth/Login");
-    config.LogoutPath = new PathString("/Admin/Auth/    Logout");
+    config.LogoutPath = new PathString("/Admin/Auth/Logout");
     config.Cookie = new CookieBuilder{
         Name = "Blog.NTierMVC",
         HttpOnly = true,
