@@ -1,0 +1,63 @@
+﻿@model List<ArticleDto>
+
+<div class="content-wrapper">
+
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+        <h4 class="py-3 mb-4">
+            <span class="text-muted fw-light">Article Management /</span> Articles
+        </h4>
+
+        <!-- Basic Bootstrap Table -->
+        <div class="card">
+            <h5 class="card-header">Table Basic</h5>
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered" id="articlesTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Created Date</th>
+                            <th>Created By</th>
+                            <th>State</th>
+                            <th>Operations</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Created Date</th>
+                            <th>Created By</th>
+                            <th>State</th>
+                            <th>Operations</th>
+                        </tr>
+                    </tfoot>
+                    <tbody class="table-border-bottom-0">
+                        @foreach (var article in Model)
+                        {
+                            <tr name="@article.Id">
+                                <th>@article.Title</th>
+                                <th>@article.Category.Name</th>
+                                <th>@article.CreatedDate</th>
+                                <th>@article.CreatedBy</th>
+                                <th>@(article.IsDeleted ? "Deactive" : "Active")</th>
+                                <th>Update</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--/ Basic Bootstrap Table -->
+
+    </div>
+
+    <div class="content-backdrop fade"></div>
+</div>
+
+@section Scripts {
+    <script src="~/js/articleIndex.js" type="application/ecmascript"></script>
+}
