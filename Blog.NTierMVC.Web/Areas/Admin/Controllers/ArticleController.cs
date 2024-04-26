@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Blog.NTierMVC.Entity.DTOs.Articles;
+using Blog.NTierMVC.Entity.Entities;
 using Blog.NTierMVC.Service.Service.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,6 +51,18 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             var categories = await categoryService.GetAllCategoriesNonDeleted();
 
             var articleUpdateDto = mapper.Map<ArticleUpdateDto>(article);
+
+            articleUpdateDto.Categories = categories;
+
+            return View(articleUpdateDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(ArticleUpdateDto articleUpdateDto)
+        {
+            await articleService.UpdateArticleAsync(articleUpdateDto);
+
+            var categories = await categoryService.GetAllCategoriesNonDeleted();
 
             articleUpdateDto.Categories = categories;
 
