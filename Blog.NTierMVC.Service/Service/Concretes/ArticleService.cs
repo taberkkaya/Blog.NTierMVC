@@ -3,11 +3,6 @@ using Blog.NTierMVC.Data.UnitOfWorks;
 using Blog.NTierMVC.Entity.DTOs.Articles;
 using Blog.NTierMVC.Entity.Entities;
 using Blog.NTierMVC.Service.Service.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blog.NTierMVC.Service.Service.Concretes
 {
@@ -42,6 +37,14 @@ namespace Blog.NTierMVC.Service.Service.Concretes
         {
             var articles = await unitOfWork.GetRepository<Article>().GetAllAsync(x => !x.IsDeleted, x => x.Category);
             var map = mapper.Map<List<ArticleDto>>(articles);
+
+            return map;
+        }
+
+        public async Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId)
+        {
+            var article = await unitOfWork.GetRepository<Article>().GetAsync(x=> !x.IsDeleted && x.Id == articleId, x => x.Category);
+            var map = mapper.Map<ArticleDto>(article);
 
             return map;
         }

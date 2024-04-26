@@ -43,12 +43,14 @@
                         @foreach (var article in Model)
                         {
                             <tr name="@article.Id">
-                                <th>@article.Title</th>
-                                <th>@article.Category.Name</th>
-                                <th>@article.CreatedDate</th>
-                                <th>@article.CreatedBy</th>
-                                <th>@(article.IsDeleted ? "Deactive" : "Active")</th>
-                                <th>Update</th>
+                                <td>@article.Title</td>
+                                <td>@article.Category.Name</td>
+                                <td>@article.CreatedDate</td>
+                                <td>@article.CreatedBy</td>
+                                <td>@(article.IsDeleted ? "Deactive" : "Active")</td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" data-id="@article.Id" asp-area="Admin" asp-controller="Article" asp-action="Update" asp-route-articleId="@article.Id"><i class="bx bxs-edit"></i></a>
+                                </td>
                             </tr>
                         }
                     </tbody>
