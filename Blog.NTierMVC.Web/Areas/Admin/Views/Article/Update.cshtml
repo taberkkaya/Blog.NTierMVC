@@ -15,19 +15,22 @@
             <div class="col-md-12">
                 <div class="card mb-4">
                     <form asp-controller="Article" asp-action="Update" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly"></div>
                         <div class="card-body">
                             <input type="hidden" asp-for="Id"/>
                             <div class="form-group">
                                 <label asp-for="CategoryId" class="form-label">Category</label>
-                                <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))"></select>
                                 <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))"></select>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Title" class="form-label">Title</label>
+                                <span asp-validation-for="Title" class="text-danger"></span>
                                 <input asp-for="Title" type="text" class="form-control mb-3" id="defaultFormControlInput" placeholder="" aria-describedby="defaultFormControlHelp">
                             </div>
                             <div class="form-group">
                                 <label asp-for="Content" class="form-label">Content</label>
+                                <span asp-validation-for="Content" class="text-danger"></span>
                                 <textarea asp-for="Content" type="text" class="form-control mb-3" id="defaultFormControlInput" placeholder="" aria-describedby="defaultFormControlHelp" style="min-height:300px;"></textarea>
                             </div>
                             <div class="form-group">
