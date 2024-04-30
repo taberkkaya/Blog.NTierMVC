@@ -1,6 +1,9 @@
-﻿using Blog.NTierMVC.Service.Service.Abstractions;
+﻿using Blog.NTierMVC.Service.FluentValidations;
+using Blog.NTierMVC.Service.Service.Abstractions;
 using Blog.NTierMVC.Service.Service.Concretes;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 using System.Reflection;
 
 namespace Blog.NTierMVC.Service.Extensions
@@ -11,11 +14,18 @@ namespace Blog.NTierMVC.Service.Extensions
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            services.AddScoped<IArticleService,ArticleService>();
+            services.AddScoped<IArticleService, ArticleService>();
 
-            services.AddScoped<ICategoryService,CategoryService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             services.AddAutoMapper(assembly);
+
+            services.AddControllersWithViews().AddFluentValidation(opt =>
+            {
+                opt.RegisterValidatorsFromAssemblyContaining<ArticleValidator>();
+                opt.DisableDataAnnotationsValidation = true;
+                opt.ValidatorOptions.LanguageManager.Culture = new CultureInfo("tr");
+            });
 
             return services;
         }
