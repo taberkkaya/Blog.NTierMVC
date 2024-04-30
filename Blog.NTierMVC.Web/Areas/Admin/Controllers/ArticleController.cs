@@ -37,10 +37,10 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         {
             await articleService.CreateArticleAsync(articleAddDto);
 
-            RedirectToAction("Index", "Article", new { Area = "Admin" });
+            return RedirectToAction("Index", "Article", new { Area = "Admin" });
 
-            var categories = await categoryService.GetAllCategoriesNonDeleted();
-            return View(new ArticleAddDto { Categories = categories });
+            //var categories = await categoryService.GetAllCategoriesNonDeleted();
+            //return View(new ArticleAddDto { Categories = categories });
         }
 
         [HttpGet]

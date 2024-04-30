@@ -20,17 +20,12 @@ namespace Blog.NTierMVC.Service.Service.Concretes
         public async Task CreateArticleAsync(ArticleAddDto articleAddDto)
         {
             var userId = Guid.Parse("CDD65005-D394-4B48-8BA4-C5526518F76F");
-
-            var article = new Article
-            {
-                Title = articleAddDto.Title,
-                Content = articleAddDto.Content,
-                CategoryId = articleAddDto.CategoryId,
-                UserId = userId,
-            };
+            var imageId = Guid.Parse("644A194E-8811-474C-92E4-796D3140AF23");
+            var article = new Article(articleAddDto.Title, articleAddDto.Content, articleAddDto.CategoryId, imageId, userId);
 
             await unitOfWork.GetRepository<Article>().AddAsync(article);
             await unitOfWork.SaveAsync();
+
         }
 
         public async Task<List<ArticleDto>> GetAllArticlesWithCategoryNonDeletedAsync()
@@ -43,7 +38,7 @@ namespace Blog.NTierMVC.Service.Service.Concretes
 
         public async Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId)
         {
-            var article = await unitOfWork.GetRepository<Article>().GetAsync(x=> !x.IsDeleted && x.Id == articleId, x => x.Category);
+            var article = await unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id == articleId, x => x.Category);
             var map = mapper.Map<ArticleDto>(article);
 
             return map;
