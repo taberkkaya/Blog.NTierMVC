@@ -347,8 +347,8 @@
     <!-- Page JS -->
     <script src="~/sneat/assets/js/dashboards-analytics.js"></script>
 
-    @await RenderSectionAsync("Scripts",false);
-
+    @await RenderSectionAsync("Scripts",false)
+    @await Component.InvokeAsync("NToastNotify")
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
