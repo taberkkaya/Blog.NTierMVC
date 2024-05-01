@@ -3,6 +3,7 @@ using Blog.NTierMVC.Data.Extensions;
 using Blog.NTierMVC.Entity.Entities;
 using Blog.NTierMVC.Service.Extensions;
 using Microsoft.AspNetCore.Identity;
+using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,13 @@ builder.Services.LoadServiceLayerExtension();
 builder.Services.AddSession();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation()
+    .AddNToastNotifyToastr(new ToastrOptions()
+    {
+        ProgressBar = true,
+        TimeOut = 3000
+    });
 
 builder.Services.AddIdentity<AppUser, AppRole>(opt =>
 {
@@ -56,6 +63,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseNToastNotify();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
