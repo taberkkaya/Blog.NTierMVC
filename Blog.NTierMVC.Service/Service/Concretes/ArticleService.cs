@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using Blog.NTierMVC.Data.UnitOfWorks;
 using Blog.NTierMVC.Entity.DTOs.Articles;
+using Blog.NTierMVC.Entity.DTOs.Image;
 using Blog.NTierMVC.Entity.Entities;
+using Blog.NTierMVC.Entity.Enums;
 using Blog.NTierMVC.Service.Extensions;
+using Blog.NTierMVC.Service.Helpers.Images;
 using Blog.NTierMVC.Service.Service.Abstractions;
 using Microsoft.AspNetCore.Http;
+using System.Net.Mime;
 using System.Security.Claims;
 
 namespace Blog.NTierMVC.Service.Service.Concretes
@@ -14,13 +18,15 @@ namespace Blog.NTierMVC.Service.Service.Concretes
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IImageHelper imageHelper;
         private readonly ClaimsPrincipal _user;
 
-        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper,IHttpContextAccessor httpContextAccessor)
+        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor, IImageHelper imageHelper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.httpContextAccessor = httpContextAccessor;
+            this.imageHelper = imageHelper;
             _user = httpContextAccessor.HttpContext.User;
         }
 
@@ -29,8 +35,12 @@ namespace Blog.NTierMVC.Service.Service.Concretes
             var userId = _user.GetLoggedInUserId();
             var userEmail = _user.GetLoggedInUserEmail();
 
-            var imageId = Guid.Parse("644A194E-8811-474C-92E4-796D3140AF23");
-            var article = new Article(articleAddDto.Title, articleAddDto.Content, articleAddDto.CategoryId, imageId, userId, userEmail);
+            var imageUpload = await imageHelper.Upload(articleAddDto.Title, articleAddDto.Photo, ImageType.Post);
+            Image image = new(imageUpload.FullName, articleAddDto.Photo.ContentType, userEmail);
+
+            await unitOfWork.GetRepository<Image>().AddAsync(image);
+
+            var article = new Article(articleAddDto.Title, articleAddDto.Content, articleAddDto.CategoryId, image.Id, userId, userEmail);
 
             await unitOfWork.GetRepository<Article>().AddAsync(article);
             await unitOfWork.SaveAsync();
@@ -47,7 +57,7 @@ namespace Blog.NTierMVC.Service.Service.Concretes
 
         public async Task<ArticleDto> GetArticleWithCategoryNonDeletedAsync(Guid articleId)
         {
-            var article = await unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id == articleId, x => x.Category);
+            var article = await unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id == articleId, x => x.Category, i => i.Image);
             var map = mapper.Map<ArticleDto>(article);
 
             return map;
@@ -55,7 +65,20 @@ namespace Blog.NTierMVC.Service.Service.Concretes
 
         public async Task<string> UpdateArticleAsync(ArticleUpdateDto articleUpdateDto)
         {
-            var article = await unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDto.Id, x => x.Category);
+
+            var userEmail = _user.GetLoggedInUserEmail();
+            var article = await unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDto.Id, x => x.Category, i => i.Image);
+
+            if (articleUpdateDto.Photo != null)
+            {
+                imageHelper.Delete(article.Image.FileName);
+                var imageUpload = await imageHelper.Upload(articleUpdateDto.Title, articleUpdateDto.Photo, ImageType.Post);
+                Image image = new(imageUpload.FullName, articleUpdateDto.Photo.ContentType, userEmail);
+                await unitOfWork.GetRepository<Image>().AddAsync(image);
+
+                article.ImageId = image.Id;
+
+            }
 
             article.Title = articleUpdateDto.Title;
             article.Content = articleUpdateDto.Content;
@@ -76,7 +99,7 @@ namespace Blog.NTierMVC.Service.Service.Concretes
 
             article.IsDeleted = true;
             article.DeletedDate = DateTime.Now;
-            article.DeletedBy = _user.GetLoggedInUserEmail();   
+            article.DeletedBy = _user.GetLoggedInUserEmail();
 
             await unitOfWork.GetRepository<Article>().UpdateAsync(article);
             await unitOfWork.SaveAsync();
