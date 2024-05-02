@@ -25,11 +25,16 @@
                                 <label asp-for="Title" class="form-label">Title</label>
                                 <span asp-validation-for="Title" class="text-danger"></span>
                                 <input asp-for="Title" type="text" class="form-control mb-3" id="defaultFormControlInput" placeholder="" aria-describedby="defaultFormControlHelp">
-                            </div>                        
+                            </div>
                             <div class="form-group">
                                 <label asp-for="Content" class="form-label">Content</label>
                                 <span asp-validation-for="Content" class="text-danger"></span>
                                 <textarea asp-for="Content" type="text" class="form-control mb-3" id="defaultFormControlInput" placeholder="" aria-describedby="defaultFormControlHelp" style="min-height:300px;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Photo" class="form-label">Photo</label>
+                                <span asp-validation-for="Photo" class="text-danger"></span>
+                                <input asp-for="Photo" type="file" accept="image/*" class="form-control mb-3" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block">Save</button>
