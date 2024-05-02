@@ -2,6 +2,7 @@
 using Blog.NTierMVC.Service.Service.Abstractions;
 using Blog.NTierMVC.Service.Service.Concretes;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
 using System.Reflection;
@@ -17,6 +18,9 @@ namespace Blog.NTierMVC.Service.Extensions
             services.AddScoped<IArticleService, ArticleService>();
 
             services.AddScoped<ICategoryService, CategoryService>();
+
+            //services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAutoMapper(assembly);
 
