@@ -1,4 +1,5 @@
 ﻿using Blog.NTierMVC.Service.FluentValidations;
+using Blog.NTierMVC.Service.Helpers.Images;
 using Blog.NTierMVC.Service.Service.Abstractions;
 using Blog.NTierMVC.Service.Service.Concretes;
 using FluentValidation.AspNetCore;
@@ -21,6 +22,8 @@ namespace Blog.NTierMVC.Service.Extensions
 
             //services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddScoped<IImageHelper, ImageHelper>();
 
             services.AddAutoMapper(assembly);
 

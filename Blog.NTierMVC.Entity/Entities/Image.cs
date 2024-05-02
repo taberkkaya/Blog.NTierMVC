@@ -1,4 +1,5 @@
 ﻿using Blog.NTierMVC.Core.Entities;
+using Blog.NTierMVC.Entity.Enums;
 
 namespace Blog.NTierMVC.Entity.Entities
 {

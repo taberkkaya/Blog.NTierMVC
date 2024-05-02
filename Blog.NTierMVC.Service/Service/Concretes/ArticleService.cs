@@ -26,7 +26,6 @@ namespace Blog.NTierMVC.Service.Service.Concretes
 
         public async Task CreateArticleAsync(ArticleAddDto articleAddDto)
         {
-            //var userId = Guid.Parse("CDD65005-D394-4B48-8BA4-C5526518F76F");
             var userId = _user.GetLoggedInUserId();
             var userEmail = _user.GetLoggedInUserEmail();
 
