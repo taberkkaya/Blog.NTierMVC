@@ -14,6 +14,7 @@ namespace Blog.NTierMVC.Service.AutoMapper.User
         public UserProfile()
         {
             CreateMap<AppUser, UserDto>().ReverseMap();
+            CreateMap<AppUser, UserAddDto>().ReverseMap();
         }
     }
 }
