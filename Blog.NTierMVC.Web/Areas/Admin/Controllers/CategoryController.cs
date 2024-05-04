@@ -8,6 +8,7 @@ using Blog.NTierMVC.Web.ResultMessages;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using System.Reflection;
 
 namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
 {
@@ -57,8 +58,35 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddWithAjax([FromBody] CategoryAddDto categoryAddDto)
+        {
+            var map = mapper.Map<Category>(categoryAddDto);
+            var result = await validator.ValidateAsync(map);
+
+            if (result.IsValid)
+            {
+                await categoryService.CreateCategoryAsync(categoryAddDto);
+
+                toast.AddSuccessToastMessage(Messages.Category.Add(categoryAddDto.Name));
+
+                return Json(Messages.Category.Add(categoryAddDto.Name));
+            }
+            else
+            {
+                toast.AddErrorToastMessage(result.Errors.First().ErrorMessage, new ToastrOptions
+                {
+                    Title = "Operation Failed"
+                });
+
+                return Json(result.Errors.First().ErrorMessage);
+            }
+        }
+
+
         [HttpGet]
-        public async Task<IActionResult> Update(Guid categoryId) {
+        public async Task<IActionResult> Update(Guid categoryId)
+        {
             var category = await categoryService.GetCategoryByGuid(categoryId);
             var map = mapper.Map<CategoryUpdateDto>(category);
             return View(map);
