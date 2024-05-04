@@ -50,7 +50,7 @@
                 return $"{userName} email adresli kullanıcı başarıyla güncellenmiştir.";
             }
 
-            public static string SafeDelete(string userName)
+            public static string Delete(string userName)
             {
                 return $"{userName} email adresli kullanıcı başarıyla silinmiştir.";
             }
