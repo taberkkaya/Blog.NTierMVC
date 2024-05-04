@@ -55,8 +55,8 @@
                                 <td>@(user.EmailConfirmed ? "Unconfirmed" : "Confirmed")</td>
                                 <td>@user.AccessFailedCount</td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Update" asp-route-categoryId="@user.Id"><i class="bx bxs-edit"></i></a>
-                                    <a class="btn btn-danger btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-categoryId="@user.Id"><i class="bx bxs-minus-circle"></i></a>
+                                    <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Update" asp-route-userId="@user.Id"><i class="bx bxs-edit"></i></a>
+                                    <a class="btn btn-danger btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id"><i class="bx bxs-minus-circle"></i></a>
                                 </td>
                             </tr>
                         }
