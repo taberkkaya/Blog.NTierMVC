@@ -18,6 +18,9 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label asp-for="CategoryId" class="form-label">Category</label>
+                                <a class="btn text-primary float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Add Category <i class="bx bx-plus"></i>
+                                </a>
                                 <span asp-validation-for="CategoryId" class="text-danger"></span>
                                 <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))"></select>
                             </div>
@@ -49,3 +52,41 @@
 
     </div>
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="d-block form-label">Category Name</label>
+                        <input type="text" class="form-control" id="categoryName"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSave" data-keyboard="false">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/categoryAdd.js"></script>
+    <script>
+        var app = app || {};
+        app.Urls = app.Urls || {};
+
+        app.Urls.baseUrl = '@Url.Content("~")';
+        app.Urls.categoryAddUrl = "@(Url.Action("AddWithAjax", "Category"))";
+        app.Urls.articleAddUrl = "@(Url.Action("Add", "Article"))";
+    </script>
+}
