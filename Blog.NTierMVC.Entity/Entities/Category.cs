@@ -1,4 +1,5 @@
 ﻿using Blog.NTierMVC.Core.Entities;
+using System.Globalization;
 
 namespace Blog.NTierMVC.Entity.Entities
 {
@@ -9,9 +10,10 @@ namespace Blog.NTierMVC.Entity.Entities
             
         }
 
-        public Category(string name)
+        public Category(string name, string createdBy)
         {
             Name = name;
+            CreatedBy = createdBy;
         }
 
         public string Name { get; set; }
