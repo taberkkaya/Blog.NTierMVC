@@ -27,6 +27,8 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             this.mapper = mapper;
             this.toast = toast;
         }
+
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var categories = await categoryService.GetAllCategoriesNonDeleted();
@@ -111,10 +113,26 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(Guid categoryId)
         {
-            var name = await categoryService.SafeDeleteArticleAsync(categoryId);
+            var name = await categoryService.SafeDeleteCategoryAsync(categoryId);
             toast.AddSuccessToastMessage(Messages.Category.SafeDelete(name), new ToastrOptions() { Title = "Silindi!" });
             return RedirectToAction("Index", "Category", new { Area = "Admin" });
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UndoDelete(Guid categoryId)
+        {
+            var name = await categoryService.UndoDeleteCategoryAsync(categoryId);
+            toast.AddSuccessToastMessage(Messages.Category.UndoDelete(name), new ToastrOptions() { Title = "Başırlı!" });
+            return RedirectToAction("Index", "Category", new { Area = "Admin" });
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeletedCategory()
+        {
+            var categories = await categoryService.GetAllCategoriesDeleted();
+            return View(categories);
         }
 
     }

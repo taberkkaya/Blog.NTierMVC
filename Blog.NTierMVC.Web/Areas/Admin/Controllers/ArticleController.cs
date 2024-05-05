@@ -27,6 +27,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             this.validator = validator;
             this.toast = toast;
         }
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var articles = await articleService.GetAllArticlesWithCategoryNonDeletedAsync();
@@ -105,6 +106,21 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             toast.AddSuccessToastMessage(Messages.Article.SafeDelete(title), new ToastrOptions() { Title = "Silindi!"});
             return RedirectToAction("Index", "Article", new { Area = "Admin" });
 
+        }
+
+        public async Task<IActionResult> UndoDelete(Guid articleId)
+        {
+            var title = await articleService.UndoDeleteArticleAsync(articleId);
+            toast.AddSuccessToastMessage(Messages.Article.UndoDelete(title), new ToastrOptions() { Title = "Başarılı!" });
+            return RedirectToAction("Index", "Article", new { Area = "Admin" });
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeletedArticle()
+        {
+            var articles = await articleService.GetAllDeletedArticlesWithCategoryNonDeletedAsync();
+            return View(articles);
         }
     }
 
