@@ -5,6 +5,7 @@ using Blog.NTierMVC.Service.Extensions;
 using Blog.NTierMVC.Service.Service.Abstractions;
 using Blog.NTierMVC.Web.ResultMessages;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
@@ -28,6 +29,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             this.toast = toast;
         }
         [HttpGet]
+        [Authorize(Roles ="Superadmin, Admin, User")]
         public async Task<IActionResult> Index()
         {
             var articles = await articleService.GetAllArticlesWithCategoryNonDeletedAsync();
@@ -35,6 +37,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Superadmin, Admin")]
         public async Task<IActionResult> Add()
         {
             var categories = await categoryService.GetAllCategoriesNonDeleted();
@@ -42,6 +45,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Superadmin, Admin")]
         public async Task<IActionResult> Add(ArticleAddDto articleAddDto)
         {
             var map = mapper.Map<Article>(articleAddDto);
@@ -62,6 +66,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Superadmin, Admin")]
         public async Task<IActionResult> Update(Guid articleId)
         {
             var article = await articleService.GetArticleWithCategoryNonDeletedAsync(articleId);
@@ -76,6 +81,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Superadmin, Admin")]
         public async Task<IActionResult> Update(ArticleUpdateDto articleUpdateDto)
         {
             var map = mapper.Map<Article>(articleUpdateDto);
@@ -100,6 +106,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
 
         }
 
+        [Authorize(Roles = "Superadmin, Admin")]
         public async Task<IActionResult> Delete(Guid articleId)
         {
             var title = await articleService.SafeDeleteArticleAsync(articleId);
@@ -107,7 +114,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             return RedirectToAction("Index", "Article", new { Area = "Admin" });
 
         }
-
+        [Authorize(Roles = "Superadmin, Admin")]
         public async Task<IActionResult> UndoDelete(Guid articleId)
         {
             var title = await articleService.UndoDeleteArticleAsync(articleId);
@@ -117,6 +124,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Superadmin, Admin")]
         public async Task<IActionResult> DeletedArticle()
         {
             var articles = await articleService.GetAllDeletedArticlesWithCategoryNonDeletedAsync();
