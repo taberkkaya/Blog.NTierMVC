@@ -6,8 +6,10 @@ using Blog.NTierMVC.Web.ResultMessages;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NToastNotify;
 using System.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
 {
@@ -16,13 +18,15 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
     {
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<AppRole> roleManager;
+        private readonly SignInManager<AppUser> signInManager;
         private readonly IMapper mapper;
         private readonly IToastNotification toast;
 
-        public UserController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, IToastNotification toast)
+        public UserController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager,IMapper mapper, IToastNotification toast)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.signInManager = signInManager;
             this.mapper = mapper;
             this.toast = toast;
         }
@@ -148,6 +152,59 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var map = mapper.Map<UserProfileDto>(user);
+            return View(map);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Profile(UserProfileDto userProfileDto)
+        {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            if (ModelState.IsValid)
+            {
+                var isVerified = await userManager.CheckPasswordAsync(user, userProfileDto.CurrentPassword);
+
+                if (isVerified && userProfileDto.NewPassword != null)
+                {
+                    var result = await userManager.ChangePasswordAsync(user, userProfileDto.CurrentPassword, userProfileDto.NewPassword) ;
+                    if (result.Succeeded)
+                    {
+                        await userManager.UpdateSecurityStampAsync(user);
+                        await signInManager.SignOutAsync();
+                        await signInManager.PasswordSignInAsync(user, userProfileDto.NewPassword, true, false);
+
+                        user.FirstName = userProfileDto.FirstName;
+                        user.LastName = userProfileDto.LastName;
+                        user.PhoneNumber = userProfileDto.PhoneNumber;
+
+                        await userManager.UpdateAsync(user);
+
+                        toast.AddSuccessToastMessage("Şifre başarıyla değiştirilmiştir.");
+                        return View();
+                    }
+                    else
+                        return View();
+                }
+                else if (isVerified)
+                {
+                    await userManager.UpdateSecurityStampAsync(user);
+                    user.FirstName = userProfileDto.FirstName;
+                    user.LastName = userProfileDto.LastName;
+                    user.PhoneNumber = userProfileDto.PhoneNumber;
+                    await userManager.UpdateAsync(user);
+                    toast.AddSuccessToastMessage("Bilgiler başarıyla değiştirilmiştir.");
+                    return View();
+                }
+            }
+
+            return View();
         }
     }
 }
