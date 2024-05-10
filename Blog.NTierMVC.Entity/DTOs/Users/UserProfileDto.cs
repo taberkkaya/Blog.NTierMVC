@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Blog.NTierMVC.Entity.Entities;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +16,8 @@ namespace Blog.NTierMVC.Entity.DTOs.Users
         public string PhoneNumber { get; set; }
         public string CurrentPassword { get; set; }
         public string? NewPassword { get; set; }
+        public IFormFile Photo { get; set; }
+        public Entities.Image Image { get; set; }
 
     }
 }
