@@ -31,7 +31,7 @@
                 </div>
                 <hr class="my-0" />
                 <div class="card-body">
-                    <form id="formAccountSettings" method="POST" onsubmit="return false">
+                    <form asp-controller="User" asp-action="Profile" method="POST" enctype="multipart/form-data">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="row">
                             <div class="mb-3 col-md-6">
@@ -41,13 +41,12 @@
                                        type="text"
                                        id="firstName"
                                        name="firstName"
-                                       value="@Model.FirstName"
                                        autofocus />
                                 <span asp-validation-for="FirstName"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label asp-for="LastName" class="form-label">Last Name</label>
-                                <input asp-for="LastName" class="form-control" type="text" name="lastName" id="lastName" value="@Model.LastName" />
+                                <input asp-for="LastName" class="form-control" type="text" name="lastName" id="lastName" />
                                 <span asp-validation-for="LastName"></span>
                             </div>
                             <div class="mb-3 col-md-6">
@@ -57,8 +56,7 @@
                                        type="text"
                                        id="email"
                                        name="email"
-                                       value="@Model.Email"
-                                       placeholder="@Model.Email" disabled/>
+                                       disabled/>
                                 <span asp-validation-for="Email"></span>
                             </div>
                             <div class="mb-3 col-md-6">
@@ -69,19 +67,13 @@
                                            type="text"
                                            id="phoneNumber"
                                            name="phoneNumber"
-                                           class="form-control"
-                                           placeholder="@Model.PhoneNumber" />
+                                           class="form-control" />
                                     <span asp-validation-for="PhoneNumber"></span>
                                 </div>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label asp-for="CurrentPassword" class="form-label">Current Password</label>
-                                <input asp-for="CurrentPassword"
-                                       type="password"
-                                       class="form-control"
-                                       id="password"
-                                       name="password"
-                                       value="@Model.CurrentPassword" />
+                                <input asp-for="CurrentPassword" type="text" class="form-control" />
                                 <span asp-validation-for="CurrentPassword"></span>
                             </div>
                             <div class="mb-3 col-md-6">
