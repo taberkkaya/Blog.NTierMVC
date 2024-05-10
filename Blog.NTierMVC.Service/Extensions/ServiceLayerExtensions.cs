@@ -19,6 +19,7 @@ namespace Blog.NTierMVC.Service.Extensions
             services.AddScoped<IArticleService, ArticleService>();
 
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IUserService, UserService>();
 
             //services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
