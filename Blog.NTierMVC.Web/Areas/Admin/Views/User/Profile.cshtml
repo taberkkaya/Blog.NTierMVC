@@ -5,91 +5,86 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card mb-4">
-                <h5 class="card-header">Profile Details</h5>
-                <!-- Account -->
-                <div class="card-body">
-                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="../assets/img/avatars/1.png"
-                             alt="user-avatar"
-                             class="d-block rounded"
-                             height="100"
-                             width="100"
-                             id="uploadedAvatar" />
-                        <div class="button-wrapper">
-                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                <span class="d-none d-sm-block">Upload new photo</span>
-                                <i class="bx bx-upload d-block d-sm-none"></i>
-                                <input type="file"
-                                       id="upload"
-                                       class="account-file-input"
-                                       hidden
-                                       accept="image/png, image/jpeg" />
-                            </label>
+            <hr class="my-0" />
+            <div class="card-body">
+                <form asp-controller="User" asp-action="Profile" method="POST" enctype="multipart/form-data">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="card mb-4">
+                        <h5 class="card-header">Profile Details</h5>
+                        <!-- Account -->
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <img src="~/images/@Model.Image.FileName"
+                                     alt="user-avatar"
+                                     class="d-block rounded"
+                                     height="100"
+                                     width="100"
+                                     id="uploadedAvatar" />
+                                <div class="button-wrapper">
+                                <label asp-for="Photo" class="form-label">Photo</label>
+                                <input asp-for="Photo" type="file" accept="image/*" class="form-control mb-3" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp">
+                            </div>
+
                         </div>
                     </div>
-                </div>
-                <hr class="my-0" />
-                <div class="card-body">
-                    <form asp-controller="User" asp-action="Profile" method="POST" enctype="multipart/form-data">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
-                                <label asp-for="FirstName" class="form-label">First Name</label>
-                                <input asp-for="FirstName"
-                                       class="form-control"
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label asp-for="FirstName" class="form-label">First Name</label>
+                            <input asp-for="FirstName"
+                                   class="form-control"
+                                   type="text"
+                                   id="firstName"
+                                   name="firstName"
+                                   autofocus />
+                            <span asp-validation-for="FirstName"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label asp-for="LastName" class="form-label">Last Name</label>
+                            <input asp-for="LastName" class="form-control" type="text" name="lastName" id="lastName" />
+                            <span asp-validation-for="LastName"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label asp-for="Email" class="form-label">E-mail</label>
+                            <input asp-for="Email"
+                                   class="form-control"
+                                   type="text"
+                                   id="email"
+                                   name="email"
+                                   disabled />
+                            <span asp-validation-for="Email"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text">TR (+90)</span>
+                                <input asp-for="PhoneNumber"
                                        type="text"
-                                       id="firstName"
-                                       name="firstName"
-                                       autofocus />
-                                <span asp-validation-for="FirstName"></span>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label asp-for="LastName" class="form-label">Last Name</label>
-                                <input asp-for="LastName" class="form-control" type="text" name="lastName" id="lastName" />
-                                <span asp-validation-for="LastName"></span>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label asp-for="Email" class="form-label">E-mail</label>
-                                <input asp-for="Email"
-                                       class="form-control"
-                                       type="text"
-                                       id="email"
-                                       name="email"
-                                       disabled/>
-                                <span asp-validation-for="Email"></span>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
-                                <div class="input-group input-group-merge">
-                                    <span class="input-group-text">TR (+90)</span>
-                                    <input asp-for="PhoneNumber"
-                                           type="text"
-                                           id="phoneNumber"
-                                           name="phoneNumber"
-                                           class="form-control" />
-                                    <span asp-validation-for="PhoneNumber"></span>
-                                </div>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label asp-for="CurrentPassword" class="form-label">Current Password</label>
-                                <input asp-for="CurrentPassword" type="text" class="form-control" />
-                                <span asp-validation-for="CurrentPassword"></span>
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label asp-for="NewPassword" class="form-label">New Password</label>
-                                <input asp-for="NewPassword" type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password" />
-                                <span asp-validation-for="NewPassword"></span>
+                                       id="phoneNumber"
+                                       name="phoneNumber"
+                                       class="form-control" />
+                                <span asp-validation-for="PhoneNumber"></span>
                             </div>
                         </div>
-                        <div class="mt-2">
-                            <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                        <div class="mb-3 col-md-6">
+                            <label asp-for="CurrentPassword" class="form-label">Current Password</label>
+                            <input asp-for="CurrentPassword" type="text" class="form-control" />
+                            <span asp-validation-for="CurrentPassword"></span>
                         </div>
-                    </form>
-                </div>
-                <!-- /Account -->
+                        <div class="mb-3 col-md-6">
+                            <label asp-for="NewPassword" class="form-label">New Password</label>
+                            <input asp-for="NewPassword" type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password" />
+                            <span asp-validation-for="NewPassword"></span>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                    </div>
+                </form>
             </div>
-
+            <!-- /Account -->
         </div>
+
     </div>
+</div>
 </div>

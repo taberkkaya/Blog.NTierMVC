@@ -10,6 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using NToastNotify;
 using System.Data;
 using Microsoft.AspNetCore.Identity;
+using Blog.NTierMVC.Entity.Enums;
+using Blog.NTierMVC.Service.Helpers.Images;
+using Blog.NTierMVC.Data.UnitOfWorks;
 
 namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
 {
@@ -21,14 +24,18 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         private readonly SignInManager<AppUser> signInManager;
         private readonly IMapper mapper;
         private readonly IToastNotification toast;
+        private readonly IImageHelper imageHelper;
+        private readonly IUnitOfWork unitOfWork;
 
-        public UserController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager,IMapper mapper, IToastNotification toast)
+        public UserController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IMapper mapper, IToastNotification toast, IImageHelper imageHelper, IUnitOfWork unitOfWork)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.signInManager = signInManager;
             this.mapper = mapper;
             this.toast = toast;
+            this.imageHelper = imageHelper;
+            this.unitOfWork = unitOfWork;
         }
         public async Task<IActionResult> Index()
         {
@@ -148,7 +155,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             {
                 foreach (var errors in result.Errors)
                     ModelState.AddModelError("", errors.Description);
-                
+
             }
 
             return NotFound();
@@ -158,7 +165,11 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Profile()
         {
             var user = await userManager.GetUserAsync(HttpContext.User);
+            var getImage = await unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == user.Id, x => x.Image);
             var map = mapper.Map<UserProfileDto>(user);
+
+            map.Image.FileName = getImage.Image.FileName;
+           
             return View(map);
         }
 
@@ -171,9 +182,9 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             {
                 var isVerified = await userManager.CheckPasswordAsync(user, userProfileDto.CurrentPassword);
 
-                if (isVerified && userProfileDto.NewPassword != null)
+                if (isVerified && userProfileDto.NewPassword != null && userProfileDto.Photo != null)
                 {
-                    var result = await userManager.ChangePasswordAsync(user, userProfileDto.CurrentPassword, userProfileDto.NewPassword) ;
+                    var result = await userManager.ChangePasswordAsync(user, userProfileDto.CurrentPassword, userProfileDto.NewPassword);
                     if (result.Succeeded)
                     {
                         await userManager.UpdateSecurityStampAsync(user);
@@ -184,6 +195,13 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
                         user.LastName = userProfileDto.LastName;
                         user.PhoneNumber = userProfileDto.PhoneNumber;
 
+                        var imageUpload = await imageHelper.Upload($"{userProfileDto.FirstName}{userProfileDto.LastName}", userProfileDto.Photo, ImageType.User);
+                        Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType, user.Email);
+
+                        await unitOfWork.GetRepository<Image>().AddAsync(image);
+
+                        user.ImageId = image.Id;
+
                         await userManager.UpdateAsync(user);
 
                         toast.AddSuccessToastMessage("Şifre başarıyla değiştirilmiştir.");
@@ -192,13 +210,24 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
                     else
                         return View();
                 }
-                else if (isVerified)
+                else if (isVerified && userProfileDto.Photo != null)
                 {
                     await userManager.UpdateSecurityStampAsync(user);
+
                     user.FirstName = userProfileDto.FirstName;
                     user.LastName = userProfileDto.LastName;
                     user.PhoneNumber = userProfileDto.PhoneNumber;
+
+                    var imageUpload = await imageHelper.Upload($"{userProfileDto.FirstName}{userProfileDto.LastName}", userProfileDto.Photo, ImageType.User);
+                    Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType, user.Email);
+
+                    await unitOfWork.GetRepository<Image>().AddAsync(image);
+
+                    user.ImageId = image.Id;
+
                     await userManager.UpdateAsync(user);
+                    await unitOfWork.SaveAsync();
+
                     toast.AddSuccessToastMessage("Bilgiler başarıyla değiştirilmiştir.");
                     return View();
                 }
