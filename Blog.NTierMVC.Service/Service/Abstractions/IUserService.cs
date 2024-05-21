@@ -14,5 +14,10 @@ namespace Blog.NTierMVC.Service.Service.Abstractions
         Task<List<UserDto>> GetAllUserWithRoleAsync();
         Task<List<AppRole>> GetAllRolesAsync();
         Task<IdentityResult> CreateUserAsync(UserAddDto userAddDto);
+        Task<IdentityResult> UpdateUserAsync(UserUpdateDto userUpdateDto);
+        Task<AppUser> GetAppUserByIdAsync(Guid Id);
+        Task<string> GetUserRoleAsync(AppUser user);
+
+        Task<(IdentityResult identityResult,string? email)> DeleteUserAsync(Guid Id);
     }
 }
