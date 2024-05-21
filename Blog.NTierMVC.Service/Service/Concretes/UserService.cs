@@ -2,13 +2,19 @@
 using Blog.NTierMVC.Data.UnitOfWorks;
 using Blog.NTierMVC.Entity.DTOs.Users;
 using Blog.NTierMVC.Entity.Entities;
+using Blog.NTierMVC.Entity.Enums;
+using Blog.NTierMVC.Service.Extensions;
+using Blog.NTierMVC.Service.Helpers.Images;
 using Blog.NTierMVC.Service.Service.Abstractions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,13 +26,21 @@ namespace Blog.NTierMVC.Service.Service.Concretes
         private readonly IMapper mapper;
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<AppRole> roleManager;
-
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly SignInManager<AppUser> signInManager;
+        private readonly IImageHelper imageHelper;
+        private readonly ClaimsPrincipal _user;
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager,
+            IHttpContextAccessor httpContextAccessor,SignInManager<AppUser> signInManager,IImageHelper imageHelper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.httpContextAccessor = httpContextAccessor;
+            this.signInManager = signInManager;
+            this.imageHelper = imageHelper;
+            _user = httpContextAccessor.HttpContext.User;
         }
 
         public async Task<IdentityResult> CreateUserAsync(UserAddDto userAddDto)
@@ -77,6 +91,18 @@ namespace Blog.NTierMVC.Service.Service.Concretes
             return await userManager.FindByIdAsync(Id.ToString());
         }
 
+        public async Task<UserProfileDto> GetUserProfileAsync()
+        {
+            var userId = _user.GetLoggedInUserId();
+            //var user = await GetAppUserByIdAsync(userId);
+            var getUserWithImage = await unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId, x => x.Image);
+            var map = mapper.Map<UserProfileDto>(getUserWithImage);
+
+            map.Image.FileName = getUserWithImage.Image.FileName;
+
+            return map;
+        }
+
         public async Task<string> GetUserRoleAsync(AppUser user)
         {
             return string.Join("", await userManager.GetRolesAsync(user));
@@ -100,6 +126,71 @@ namespace Blog.NTierMVC.Service.Service.Concretes
 
             return result;
 
+        }
+
+        public async Task<bool> UpdateUserProfileAsync(UserProfileDto userProfileDto)
+        {
+            var userId = _user.GetLoggedInUserId();
+            var user = await GetAppUserByIdAsync(userId);
+
+            var isVerified = await userManager.CheckPasswordAsync(user, userProfileDto.CurrentPassword);
+
+            if (isVerified && userProfileDto.NewPassword != null && userProfileDto.Photo != null)
+            {
+                var result = await userManager.ChangePasswordAsync(user, userProfileDto.CurrentPassword, userProfileDto.NewPassword);
+                if (result.Succeeded)
+                {
+                    await userManager.UpdateSecurityStampAsync(user);
+                    await signInManager.SignOutAsync();
+                    await signInManager.PasswordSignInAsync(user, userProfileDto.NewPassword, true, false);
+
+                    user.FirstName = userProfileDto.FirstName;
+                    user.LastName = userProfileDto.LastName;
+                    user.PhoneNumber = userProfileDto.PhoneNumber;
+
+                    var imageUpload = await imageHelper.Upload($"{userProfileDto.FirstName}{userProfileDto.LastName}", userProfileDto.Photo, ImageType.User);
+                    Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType, user.Email);
+
+                    await unitOfWork.GetRepository<Image>().AddAsync(image);
+                    user.ImageId = image.Id;
+
+                    await userManager.UpdateAsync(user);
+
+                    //toast.AddSuccessToastMessage("Şifre başarıyla değiştirilmiştir.");
+                    //return View();
+
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else if (isVerified && userProfileDto.Photo != null)
+            {
+                await userManager.UpdateSecurityStampAsync(user);
+
+                user.FirstName = userProfileDto.FirstName;
+                user.LastName = userProfileDto.LastName;
+                user.PhoneNumber = userProfileDto.PhoneNumber;
+
+                var imageUpload = await imageHelper.Upload($"{userProfileDto.FirstName}{userProfileDto.LastName}", userProfileDto.Photo, ImageType.User);
+                Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType, user.Email);
+
+                await unitOfWork.GetRepository<Image>().AddAsync(image);
+
+                user.ImageId = image.Id;
+
+                await userManager.UpdateAsync(user);
+                await unitOfWork.SaveAsync();
+
+                return true;
+
+                //toast.AddSuccessToastMessage("Bilgiler başarıyla değiştirilmiştir.");
+                //return View();
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
