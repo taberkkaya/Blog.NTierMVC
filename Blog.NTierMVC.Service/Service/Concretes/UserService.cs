@@ -21,7 +21,7 @@ namespace Blog.NTierMVC.Service.Service.Concretes
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<AppRole> roleManager;
 
-        public UserService(IUnitOfWork unitOfWork,IMapper mapper, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -40,6 +40,14 @@ namespace Blog.NTierMVC.Service.Service.Concretes
                 await userManager.AddToRoleAsync(map, findRole.ToString());
             }
             return result;
+        }
+
+        public async Task<(IdentityResult identityResult, string? email)> DeleteUserAsync(Guid Id)
+        {
+            var user = await GetAppUserByIdAsync(Id);
+            var result = await userManager.DeleteAsync(user);
+            
+            return (result,user.Email);
         }
 
         public async Task<List<AppRole>> GetAllRolesAsync()
@@ -62,6 +70,36 @@ namespace Blog.NTierMVC.Service.Service.Concretes
             }
 
             return map;
+        }
+
+        public async Task<AppUser> GetAppUserByIdAsync(Guid Id)
+        {
+            return await userManager.FindByIdAsync(Id.ToString());
+        }
+
+        public async Task<string> GetUserRoleAsync(AppUser user)
+        {
+            return string.Join("", await userManager.GetRolesAsync(user));
+
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(UserUpdateDto userUpdateDto)
+        {
+            var user = await GetAppUserByIdAsync(userUpdateDto.Id);
+
+            var userRole = await GetUserRoleAsync(user);
+
+            var result = await userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+
+                await userManager.RemoveFromRoleAsync(user, userRole);
+                var findRole = await roleManager.FindByIdAsync(userUpdateDto.RoleId.ToString());
+                await userManager.AddToRoleAsync(user, findRole.Name);
+            }
+
+            return result;
+
         }
     }
 }

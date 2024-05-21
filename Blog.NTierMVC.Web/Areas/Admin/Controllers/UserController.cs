@@ -16,6 +16,7 @@ using Blog.NTierMVC.Data.UnitOfWorks;
 using Blog.NTierMVC.Service.Service.Abstractions;
 using FluentValidation;
 using Blog.NTierMVC.Service.Extensions;
+using static Blog.NTierMVC.Web.ResultMessages.Messages;
 
 namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
 {
@@ -88,7 +89,7 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid userId)
         {
-            var user = await userManager.FindByIdAsync(userId.ToString());
+            var user = await userService.GetAppUserByIdAsync(userId);
             var roles = await roleManager.Roles.ToListAsync();
 
             var map = mapper.Map<UserUpdateDto>(user);
@@ -100,26 +101,20 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
         {
-            var user = await userManager.FindByIdAsync(userUpdateDto.Id.ToString());
+            var user = await userService.GetAppUserByIdAsync(userUpdateDto.Id);
             if (user != null)
             {
-                var userRole = string.Join("", await userManager.GetRolesAsync(user));
-                var roles = await roleManager.Roles.ToListAsync();
+                var userRole = await userService.GetUserRoleAsync(user);
+                var roles = await userService.GetAllRolesAsync();
 
                 if (ModelState.IsValid)
                 {
                     mapper.Map(userUpdateDto, user);
                     user.UserName = userUpdateDto.Email;
                     user.SecurityStamp = Guid.NewGuid().ToString();
-                    var result = await userManager.UpdateAsync(user);
+                    var result = await userService.UpdateUserAsync(userUpdateDto);
                     if (result.Succeeded)
                     {
-
-                        await userManager.RemoveFromRoleAsync(user, userRole);
-
-                        var findRole = await roleManager.FindByIdAsync(userUpdateDto.RoleId.ToString());
-                        await userManager.AddToRoleAsync(user, findRole.Name);
-
                         toast.AddSuccessToastMessage(Messages.User.Update(userUpdateDto.Email), new ToastrOptions() { Title = "Başarılı!" });
                         return RedirectToAction("Index", "User", new { Area = "Admin" });
                     }
@@ -137,17 +132,18 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(Guid userId)
         {
-            var user = await userManager.FindByIdAsync(userId.ToString());
+            //var user = await userService.GetAppUserByIdAsync(userId);
 
-            var result = await userManager.DeleteAsync(user);
-            if (result.Succeeded)
+            var result = await userService.DeleteUserAsync(userId);
+
+            if (result.identityResult.Succeeded)
             {
-                toast.AddSuccessToastMessage(Messages.User.Delete(user.Email), new ToastrOptions() { Title = "Başarılı!" });
+                toast.AddSuccessToastMessage(Messages.User.Delete(result.email), new ToastrOptions() { Title = "Başarılı!" });
                 return RedirectToAction("Index", "User", new { Area = "Admin" });
             }
             else
             {
-                foreach (var errors in result.Errors)
+                foreach (var errors in result.identityResult.Errors)
                     ModelState.AddModelError("", errors.Description);
 
             }
@@ -155,79 +151,79 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Profile()
-        {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            var getImage = await unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == user.Id, x => x.Image);
-            var map = mapper.Map<UserProfileDto>(user);
+        //[HttpGet]
+        //public async Task<IActionResult> Profile()
+        //{
+        //    var user = await userService.GetAppUserByIdAsync(HttpContext.User.GetLoggedInUserId());
+        //    var getImage = await unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == user.Id, x => x.Image);
+        //    var map = mapper.Map<UserProfileDto>(user);
 
-            map.Image.FileName = getImage.Image.FileName;
+        //    map.Image.FileName = getImage.Image.FileName;
 
-            return View(map);
-        }
+        //    return View(map);
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Profile(UserProfileDto userProfileDto)
-        {
-            var user = await userManager.GetUserAsync(HttpContext.User);
+        //[HttpPost]
+        //public async Task<IActionResult> Profile(UserProfileDto userProfileDto)
+        //{
+        //    var user = await userManager.GetUserAsync(HttpContext.User);
 
-            if (ModelState.IsValid)
-            {
-                var isVerified = await userManager.CheckPasswordAsync(user, userProfileDto.CurrentPassword);
+        //    if (ModelState.IsValid)
+        //    {
+        //        var isVerified = await userManager.CheckPasswordAsync(user, userProfileDto.CurrentPassword);
 
-                if (isVerified && userProfileDto.NewPassword != null && userProfileDto.Photo != null)
-                {
-                    var result = await userManager.ChangePasswordAsync(user, userProfileDto.CurrentPassword, userProfileDto.NewPassword);
-                    if (result.Succeeded)
-                    {
-                        await userManager.UpdateSecurityStampAsync(user);
-                        await signInManager.SignOutAsync();
-                        await signInManager.PasswordSignInAsync(user, userProfileDto.NewPassword, true, false);
+        //        if (isVerified && userProfileDto.NewPassword != null && userProfileDto.Photo != null)
+        //        {
+        //            var result = await userManager.ChangePasswordAsync(user, userProfileDto.CurrentPassword, userProfileDto.NewPassword);
+        //            if (result.Succeeded)
+        //            {
+        //                await userManager.UpdateSecurityStampAsync(user);
+        //                await signInManager.SignOutAsync();
+        //                await signInManager.PasswordSignInAsync(user, userProfileDto.NewPassword, true, false);
 
-                        user.FirstName = userProfileDto.FirstName;
-                        user.LastName = userProfileDto.LastName;
-                        user.PhoneNumber = userProfileDto.PhoneNumber;
+        //                user.FirstName = userProfileDto.FirstName;
+        //                user.LastName = userProfileDto.LastName;
+        //                user.PhoneNumber = userProfileDto.PhoneNumber;
 
-                        var imageUpload = await imageHelper.Upload($"{userProfileDto.FirstName}{userProfileDto.LastName}", userProfileDto.Photo, ImageType.User);
-                        Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType, user.Email);
+        //                var imageUpload = await imageHelper.Upload($"{userProfileDto.FirstName}{userProfileDto.LastName}", userProfileDto.Photo, ImageType.User);
+        //                Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType, user.Email);
 
-                        await unitOfWork.GetRepository<Image>().AddAsync(image);
+        //                await unitOfWork.GetRepository<Image>().AddAsync(image);
 
-                        user.ImageId = image.Id;
+        //                user.ImageId = image.Id;
 
-                        await userManager.UpdateAsync(user);
+        //                await userManager.UpdateAsync(user);
 
-                        toast.AddSuccessToastMessage("Şifre başarıyla değiştirilmiştir.");
-                        return View();
-                    }
-                    else
-                        return View();
-                }
-                else if (isVerified && userProfileDto.Photo != null)
-                {
-                    await userManager.UpdateSecurityStampAsync(user);
+        //                toast.AddSuccessToastMessage("Şifre başarıyla değiştirilmiştir.");
+        //                return View();
+        //            }
+        //            else
+        //                return View();
+        //        }
+        //        else if (isVerified && userProfileDto.Photo != null)
+        //        {
+        //            await userManager.UpdateSecurityStampAsync(user);
 
-                    user.FirstName = userProfileDto.FirstName;
-                    user.LastName = userProfileDto.LastName;
-                    user.PhoneNumber = userProfileDto.PhoneNumber;
+        //            user.FirstName = userProfileDto.FirstName;
+        //            user.LastName = userProfileDto.LastName;
+        //            user.PhoneNumber = userProfileDto.PhoneNumber;
 
-                    var imageUpload = await imageHelper.Upload($"{userProfileDto.FirstName}{userProfileDto.LastName}", userProfileDto.Photo, ImageType.User);
-                    Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType, user.Email);
+        //            var imageUpload = await imageHelper.Upload($"{userProfileDto.FirstName}{userProfileDto.LastName}", userProfileDto.Photo, ImageType.User);
+        //            Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType, user.Email);
 
-                    await unitOfWork.GetRepository<Image>().AddAsync(image);
+        //            await unitOfWork.GetRepository<Image>().AddAsync(image);
 
-                    user.ImageId = image.Id;
+        //            user.ImageId = image.Id;
 
-                    await userManager.UpdateAsync(user);
-                    await unitOfWork.SaveAsync();
+        //            await userManager.UpdateAsync(user);
+        //            await unitOfWork.SaveAsync();
 
-                    toast.AddSuccessToastMessage("Bilgiler başarıyla değiştirilmiştir.");
-                    return View();
-                }
-            }
+        //            toast.AddSuccessToastMessage("Bilgiler başarıyla değiştirilmiştir.");
+        //            return View();
+        //        }
+        //    }
 
-            return View();
-        }
+        //    return View();
+        //}
     }
 }
