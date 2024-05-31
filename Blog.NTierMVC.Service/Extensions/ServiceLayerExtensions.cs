@@ -25,6 +25,7 @@ namespace Blog.NTierMVC.Service.Extensions
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddScoped<IDashboardService, DashboardService>();
 
             services.AddAutoMapper(assembly);
 

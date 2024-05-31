@@ -19,11 +19,7 @@
       series: [
         {
           name: '2021',
-          data: [18, 7, 15, 29, 18, 12, 9]
-        },
-        {
-          name: '2020',
-          data: [-13, -18, -9, -14, -5, -17, -15]
+          data: [18, 7, 15, 29, 18, 12, 9,7,3,1,12,12]
         }
       ],
       chart: {
@@ -78,7 +74,7 @@
         }
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: ['Ocak', 'Subat', 'Mart', 'Nisan', 'Mayis', 'Haziran', 'Temmuz','Agustos','Eylul','Ekim','Kasim','Aralik'],
         labels: {
           style: {
             fontSize: '13px',
