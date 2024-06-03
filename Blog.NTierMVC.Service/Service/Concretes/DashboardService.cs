@@ -20,6 +20,13 @@ namespace Blog.NTierMVC.Service.Service.Concretes
             return countArticle;
         }
 
+        public async Task<int> GetTotalCategoryCount()
+        {
+            var countCategory = await unitOfWork.GetRepository<Category>().CountAsync();
+
+            return countCategory;
+        }
+
         public async Task<List<int>> GetYearlyArticleCount()
         {
             var articles = await unitOfWork.GetRepository<Article>().GetAllAsync(x => !x.IsDeleted);
