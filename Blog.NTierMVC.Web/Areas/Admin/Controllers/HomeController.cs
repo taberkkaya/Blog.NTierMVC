@@ -41,5 +41,14 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             return Json(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> TotalCategoryCount()
+        {
+            var result = await dashboardService.GetTotalCategoryCount();
+
+            return Json(result);
+        }
+
+
     }
 }
