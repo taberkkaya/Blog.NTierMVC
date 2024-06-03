@@ -1,5 +1,19 @@
 ﻿$(document).ready(function () {
     var yearlyArticlesUrl = app.Urls.yearlyArticleUrl
+    var totalArticleCountUrl = app.Urls.totalArticleCountUrl
+
+    $.ajax(
+        {
+            type: "GET",
+            url: totalArticleCountUrl,
+            dataType: "json",
+            success: function (data) {
+                $("h3#totalArticleCount").append(data);
+            },
+            error: function () {
+                toastr.error("Makale Analizleri Yüklenirken Hata Oluştu", "Hata");
+            }
+        });
 
     $.ajax({
         type: "GET",

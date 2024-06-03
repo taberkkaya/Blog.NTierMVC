@@ -13,6 +13,13 @@ namespace Blog.NTierMVC.Service.Service.Concretes
             this.unitOfWork = unitOfWork;
         }
 
+        public async Task<int> GetTotalArticleCount()
+        {
+            var countArticle = await unitOfWork.GetRepository<Article>().CountAsync();
+
+            return countArticle;
+        }
+
         public async Task<List<int>> GetYearlyArticleCount()
         {
             var articles = await unitOfWork.GetRepository<Article>().GetAllAsync(x => !x.IsDeleted);

@@ -1,6 +1,7 @@
 ﻿using Blog.NTierMVC.Service.Service.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
 
 namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
@@ -31,5 +32,14 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
 
             return Json(JsonConvert.SerializeObject(result));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> TotalArticleCount()
+        {
+            var result = await dashboardService.GetTotalArticleCount();
+
+            return Json(result);
+        }
+
     }
 }

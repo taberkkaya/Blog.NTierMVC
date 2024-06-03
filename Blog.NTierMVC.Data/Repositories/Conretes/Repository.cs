@@ -76,6 +76,8 @@ namespace Blog.NTierMVC.Data.Repositories.Conretes
 
         public async Task<int> CountAsync(Expression<Func<T, bool>> predicate = null)
         {
+            if(predicate is null)
+                return await Table.CountAsync();
             return await Table.CountAsync(predicate);
         }
     }
