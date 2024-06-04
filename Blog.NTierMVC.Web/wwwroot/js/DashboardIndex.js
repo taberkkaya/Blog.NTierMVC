@@ -2,6 +2,31 @@
     var yearlyArticlesUrl = app.Urls.yearlyArticleUrl
     var totalArticleCountUrl = app.Urls.totalArticleCountUrl
     var totalCategoryCountUrl = app.Urls.totalCategoryCountUrl
+    var totalUserCountUrl = app.Urls.totalUserCountUrl
+    var totlaRoleCountUrl = app.Urls.totalRoleCountUrl
+
+    $.ajax({
+        type: "GET",
+        url: totlaRoleCountUrl,
+        success: function (data) {
+            $("h3#totalRoleCount").append(data);
+        },
+        error: function () {
+            toastr.error("Roller Yüklenirken Hata Oluştu", "Hata");
+        }
+    });
+
+
+    $.ajax({
+        type: "GET",
+        url: totalUserCountUrl,
+        success: function (data) {
+            $("h3#totalUserCount").append(data);
+        },
+        error: function () {
+            toastr.error("Kullanıcılar Yüklenirken Hata Oluştu", "Hata");
+        }
+    });
 
 
     $.ajax(
