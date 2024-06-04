@@ -49,6 +49,19 @@ namespace Blog.NTierMVC.Web.Areas.Admin.Controllers
             return Json(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> TotalUserCount()
+        {
+            var result = await dashboardService.GetTotalUserCount();
+            return Json(result);    
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TotalRoleCount()
+        {
+            var result = await dashboardService.GetTotalRoleCount();
+            return Json(result);
+        }
 
     }
 }

@@ -1,6 +1,8 @@
-﻿using Blog.NTierMVC.Data.UnitOfWorks;
+﻿using Blog.NTierMVC.Data.Migrations;
+using Blog.NTierMVC.Data.UnitOfWorks;
 using Blog.NTierMVC.Entity.Entities;
 using Blog.NTierMVC.Service.Service.Abstractions;
+using System.Text.Json.Nodes;
 
 namespace Blog.NTierMVC.Service.Service.Concretes
 {
@@ -25,6 +27,19 @@ namespace Blog.NTierMVC.Service.Service.Concretes
             var countCategory = await unitOfWork.GetRepository<Category>().CountAsync();
 
             return countCategory;
+        }
+
+        public async Task<int> GetTotalRoleCount()
+        {
+            var countRoles = await unitOfWork.GetRepository<AppRole>().CountAsync();
+
+            return countRoles;
+        }
+
+        public async Task<int> GetTotalUserCount()
+        {
+            var countUser = await unitOfWork.GetRepository<AppUser>().CountAsync();
+            return countUser;
         }
 
         public async Task<List<int>> GetYearlyArticleCount()
