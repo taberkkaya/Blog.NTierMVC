@@ -88,9 +88,8 @@
                 @foreach(var item in Model)
                 {
                     var itemUrl = $"~/images/{@item.Image.FileName}";
-
                     <div class="item">
-                        <img src="@itemUrl" alt="">
+                        <img style="height:20em; width:20em;" class="mb-3" src="~/images/@item.Image.FileName" alt="@item.CreatedBy" />
                         <div class="item-content">
                             <div class="main-content">
                                 <div class="meta-category">
