@@ -49,7 +49,7 @@ namespace Blog.NTierMVC.Service.Service.Concretes
 
         public async Task<List<ArticleDto>> GetAllArticlesWithCategoryNonDeletedAsync()
         {
-            var articles = await unitOfWork.GetRepository<Article>().GetAllAsync(x => !x.IsDeleted, x => x.Category);
+            var articles = await unitOfWork.GetRepository<Article>().GetAllAsync(x => !x.IsDeleted, x => x.Category, i => i.Image);
             var map = mapper.Map<List<ArticleDto>>(articles);
 
             return map;
