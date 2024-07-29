@@ -11,5 +11,6 @@ namespace Blog.NTierMVC.Service.Service.Abstractions
         Task<string> UpdateArticleAsync(ArticleUpdateDto articleUpdateDto);
         Task<string> SafeDeleteArticleAsync(Guid articleId);
         Task<string> UndoDeleteArticleAsync(Guid articleId);
+        Task<ArticleListDto> GetAllByPagingAsync(Guid? categoryId, int currentPage = 1, int pageSize = 1, bool isAscending = false);
     }
 }
