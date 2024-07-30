@@ -36,7 +36,13 @@ namespace Blog.NTierMVC.Service.Service.Concretes
 
             return map;
         }
+        public async Task<List<CategoryDto>> GetAllCategoriesNonDeletedTake24()
+        {
+            var categories = await unitOfWork.GetRepository<Category>().GetAllAsync(x => !x.IsDeleted);
+            var map = mapper.Map<List<CategoryDto>>(categories);
 
+            return map.Take(24).ToList();
+        }
         public async Task CreateCategoryAsync(CategoryAddDto categoryAddDto)
         {
             var userEmail = _user.GetLoggedInUserEmail();

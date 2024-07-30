@@ -12,6 +12,7 @@ namespace Blog.NTierMVC.Service.Service.Abstractions
         Task<string> UpdateCategoryAsync(CategoryUpdateDto categoryUpdateDto);
         Task<string> SafeDeleteCategoryAsync(Guid categoryId);
         Task<string> UndoDeleteCategoryAsync(Guid categoryId);
+        Task<List<CategoryDto>> GetAllCategoriesNonDeletedTake24();
 
     }
 }
