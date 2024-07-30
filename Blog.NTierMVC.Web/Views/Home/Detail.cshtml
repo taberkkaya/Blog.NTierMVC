@@ -1,0 +1,58 @@
+﻿@model ArticleDto
+
+
+    <div style="height:50px"></div>
+
+    <section class="blog-posts">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="all-blog-posts">
+                        <div class="row">
+                           
+                                <div class="col-lg-12">
+                                <div class="blog-post">
+                                    <div class="blog-thumb">
+                                        <img src="~/stand-blog/assets/images/blog-post-01.jpg" alt="">
+                                    </div>
+                                    <div class="down-content">
+                                        <a href="post-details.html">
+                                            <a href="#"><h4>@Model.Title</h4></a>
+                                        <ul class="post-info">
+                                            <li><a href="#">@Model.User.FirstName @Model.User.LastName</a></li>
+                                            <li><a href="#">@Model.CreatedDate.ToString("dd/MM/yyyy")</a></li>
+                                            <li><a href="#"><i class="fa-solid fa-eye"></i>@Model.ViewCount</a></li>
+                                        </ul>
+                                        <p> 
+                                            @Model.Content
+                                        </p>
+                                        <div class="post-options">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <ul class="post-tags">
+                                                        <li><i class="fa fa-tags"></i></li>
+                                                        <li><a href="#">@Model.Category.Name</a></li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="main-button">
+                                    <a href="blog.html">View All Posts</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+
+   
