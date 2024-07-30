@@ -55,6 +55,32 @@ namespace Blog.NTierMVC.Service.Service.Concretes
             };
         }
 
+        public async Task<ArticleListDto> SearchAsync(string keyword, int currentPage = 1, int pageSize = 1, bool isAscending = false)
+        {
+            pageSize = pageSize > 20 ? 20 : pageSize;
+
+            var articles = await unitOfWork.GetRepository<Article>().GetAllAsync(a => !a.IsDeleted && (
+
+            a.Title.Contains(keyword) || a.Category.Name.Contains(keyword) || a.Content.Contains(keyword)
+            
+            ), a => a.Category, a => a.Image, u => u.User);
+                
+            var sortedArtciles = isAscending ?
+                articles.OrderBy(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
+                : articles.OrderByDescending(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+
+            //var map = mapper.Map<List<ArticleListDto>>(articles);
+
+            return new ArticleListDto
+            {
+                Articles = sortedArtciles,
+                CurrentPage = currentPage,
+                PageSize = pageSize,
+                TotalCount = articles.Count,
+                IsAscending = isAscending
+            };
+        }
+
         public async Task CreateArticleAsync(ArticleAddDto articleAddDto)
         {
             var userId = _user.GetLoggedInUserId();
