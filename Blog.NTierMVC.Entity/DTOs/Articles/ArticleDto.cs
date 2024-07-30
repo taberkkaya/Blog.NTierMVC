@@ -13,5 +13,7 @@ namespace Blog.NTierMVC.Entity.DTOs.Articles
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public bool IsDeleted { get; set; }
+        public AppUser User { get; set; }
+        public int ViewCount { get; set; }
     }
 }

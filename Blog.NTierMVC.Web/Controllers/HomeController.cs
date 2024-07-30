@@ -1,7 +1,9 @@
 using Blog.NTierMVC.Data.UnitOfWorks;
+using Blog.NTierMVC.Entity.DTOs.Articles;
 using Blog.NTierMVC.Service.Service.Abstractions;
 using Blog.NTierMVC.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using System.Diagnostics;
 
 namespace Blog.NTierMVC.Web.Controllers
@@ -33,5 +35,13 @@ namespace Blog.NTierMVC.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public async Task<IActionResult> Detail(Guid id)
+        {
+            ArticleDto article = await articleService.GetArticleWithCategoryNonDeletedAsync(id);
+            
+            return View(article);
+        }
+
     }
 }

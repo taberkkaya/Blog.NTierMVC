@@ -146,7 +146,8 @@
                                         <img src="~/stand-blog/assets/images/blog-post-01.jpg" alt="">
                                     </div>
                                     <div class="down-content">
-                                        <a href="post-details.html"><h4>@item.Title</h4></a>
+                                        <a href="post-details.html">
+                                            <a asp-controller="Home" asp-action="Detail" asp-route-id=@item.Id><h4>@item.Title</h4></a>
                                         <ul class="post-info">
                                             <li><a href="#">@item.User.FirstName @item.User.LastName</a></li>
                                             <li><a href="#">@item.CreatedDate.ToString("dd/MM/yyyy")</a></li>
@@ -167,7 +168,7 @@
                                                 <div class="col-6">
                                                     <ul class="post-share">
                                                         <li><i class="fa fa-link"></i></li>
-                                                        <li><a href="#">[Devamını Oku]</li>
+                                                        <li><a asp-controller="Home" asp-action="Detail" asp-route-id=@item.Id>[Devamını Oku]</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
