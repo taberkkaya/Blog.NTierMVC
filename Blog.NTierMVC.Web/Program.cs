@@ -2,6 +2,7 @@ using Blog.NTierMVC.Data.Context;
 using Blog.NTierMVC.Data.Extensions;
 using Blog.NTierMVC.Entity.Entities;
 using Blog.NTierMVC.Service.Extensions;
+using Blog.NTierMVC.Web.Filter.ArticleVisitors;
 using Microsoft.AspNetCore.Identity;
 using NToastNotify;
 
@@ -20,7 +21,10 @@ builder.Services.LoadServiceLayerExtension();
 builder.Services.AddSession();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews()
+builder.Services.AddControllersWithViews(opt =>
+{
+    opt.Filters.Add<ArticleVisitorFilter>();
+})
     .AddRazorRuntimeCompilation()
     .AddNToastNotifyToastr(new ToastrOptions()
     {
