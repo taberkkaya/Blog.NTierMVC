@@ -4,6 +4,7 @@ using Blog.NTierMVC.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.NTierMVC.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240805104634_SocialMedia")]
+    partial class SocialMedia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,21 +56,21 @@ namespace Blog.NTierMVC.Data.Migrations
                         new
                         {
                             Id = new Guid("c685c5ab-f989-4372-b46e-0bea49d44098"),
-                            ConcurrencyStamp = "2d388a07-0164-4232-bbce-2bbb7f4fc786",
+                            ConcurrencyStamp = "da7975cc-9cc0-4c9c-aef0-4fc7850702fb",
                             Name = "Superadmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = new Guid("97b28373-bf1c-4188-a833-03379fd3679f"),
-                            ConcurrencyStamp = "89c8313a-d41a-4c79-8050-0e9943274f2b",
+                            ConcurrencyStamp = "429e120c-f04c-4581-a1b9-8bc02fd3bed3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("5e5b68dd-2512-4600-add0-882c842a8b56"),
-                            ConcurrencyStamp = "cee4a81d-5b79-4a43-bc03-b68233b4d5e2",
+                            ConcurrencyStamp = "24a60565-ba16-4cb4-93fb-49fef689d092",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -180,7 +183,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("cdd65005-d394-4b48-8ba4-c5526518f76f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "54285090-ffe1-486b-a66e-b5263c9b35dc",
+                            ConcurrencyStamp = "00e2506f-dda0-4d0e-94ad-27d76da531c2",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "DUMMYUSER",
@@ -189,7 +192,7 @@ namespace Blog.NTierMVC.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "superadmin@gmail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBV4LmjDiGakiEFyToTV/9hq8KOfqfWXa65gVnprpZHN9W1iDhi+JqW/3PpZVjUrfA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFPBBu8S2OMW11LJTw+iSKotfBKGBai6gfC3tqzJ4aS0dGJmSKyFcSEBtHHlNgi++w==",
                             PhoneNumber = "+905439999999",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "00000000-0000-0000-0000-000000000000",
@@ -200,7 +203,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("5499dd26-468d-4606-be18-1abe347582ff"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "765fde0e-17a2-4e2a-98ad-fe23a6035bdf",
+                            ConcurrencyStamp = "a873bf95-af74-4b6a-b134-7ec7f9baee97",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "DUMMYUSER",
@@ -209,7 +212,7 @@ namespace Blog.NTierMVC.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "admin@gmail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJIvNSjFnKdFXLD7h5wJGzNaHOnRQfbIPzfx8Jn/CNgR/YpidBMdc7HDD/zdn9B2qw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJgwKKhI0omF/I1PBeoHlJrpMFyA8fz1Uxhx5qZrGm9qU4L0hu0eyV6ckoq20jL8gQ==",
                             PhoneNumber = "+905438888888",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "00000000-0000-0000-0000-000000000000",
@@ -372,11 +375,11 @@ namespace Blog.NTierMVC.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("31a608cc-cdaa-40b0-8237-ff5fbf90f1b2"),
+                            Id = new Guid("18c19546-43b0-4165-98d5-1085dca86166"),
                             CategoryId = new Guid("6da1aee9-4ceb-4f36-b668-97e94ffda000"),
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 13, 50, 27, 483, DateTimeKind.Local).AddTicks(1750),
+                            CreatedDate = new DateTime(2024, 8, 5, 13, 46, 33, 139, DateTimeKind.Local).AddTicks(713),
                             ImageId = new Guid("644a194e-8811-474c-92e4-796d3140af23"),
                             IsDeleted = false,
                             Title = "What is Lorem Ipsum?",
@@ -385,11 +388,11 @@ namespace Blog.NTierMVC.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8b3595f0-038b-4ec9-988c-e5b33e341fab"),
+                            Id = new Guid("390e9206-e60c-4662-a481-1c810964af66"),
                             CategoryId = new Guid("ffbf1647-f1e9-4cca-b37c-c0988cd73ab7"),
                             Content = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 13, 50, 27, 483, DateTimeKind.Local).AddTicks(1757),
+                            CreatedDate = new DateTime(2024, 8, 5, 13, 46, 33, 139, DateTimeKind.Local).AddTicks(733),
                             ImageId = new Guid("cd6083ab-faa6-4a2c-bffa-1c01c46a7b71"),
                             IsDeleted = false,
                             Title = "Why do we use it?",
@@ -454,7 +457,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("6da1aee9-4ceb-4f36-b668-97e94ffda000"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 13, 50, 27, 483, DateTimeKind.Local).AddTicks(6392),
+                            CreatedDate = new DateTime(2024, 8, 5, 13, 46, 33, 139, DateTimeKind.Local).AddTicks(8732),
                             IsDeleted = false,
                             Name = "What is Lorem Ipsum?"
                         },
@@ -462,7 +465,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("ffbf1647-f1e9-4cca-b37c-c0988cd73ab7"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 13, 50, 27, 483, DateTimeKind.Local).AddTicks(6395),
+                            CreatedDate = new DateTime(2024, 8, 5, 13, 46, 33, 139, DateTimeKind.Local).AddTicks(8742),
                             IsDeleted = false,
                             Name = "Why do we use it?"
                         });
@@ -513,7 +516,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("644a194e-8811-474c-92e4-796d3140af23"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 13, 50, 27, 483, DateTimeKind.Local).AddTicks(7283),
+                            CreatedDate = new DateTime(2024, 8, 5, 13, 46, 33, 140, DateTimeKind.Local).AddTicks(957),
                             FileName = "Test",
                             FileType = "jpg",
                             IsDeleted = false
@@ -522,7 +525,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("cd6083ab-faa6-4a2c-bffa-1c01c46a7b71"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 13, 50, 27, 483, DateTimeKind.Local).AddTicks(7286),
+                            CreatedDate = new DateTime(2024, 8, 5, 13, 46, 33, 140, DateTimeKind.Local).AddTicks(966),
                             FileName = "Lorem_Ipsum",
                             FileType = "png",
                             IsDeleted = false
@@ -571,6 +574,9 @@ namespace Blog.NTierMVC.Data.Migrations
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
