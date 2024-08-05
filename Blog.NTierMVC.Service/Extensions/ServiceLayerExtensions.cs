@@ -27,6 +27,8 @@ namespace Blog.NTierMVC.Service.Extensions
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IDashboardService, DashboardService>();
 
+            services.AddScoped<ISocialMediaService, SocialMediaService>();
+
             services.AddAutoMapper(assembly);
 
             services.AddControllersWithViews().AddFluentValidation(opt =>
