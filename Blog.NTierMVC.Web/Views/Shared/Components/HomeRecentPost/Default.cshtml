@@ -10,7 +10,7 @@
                 @foreach (var item in Model)
                 {
                     <li>
-                        <a href="post-details.html">
+                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id">
                             <h5>@item.Title</h5>
                             <span>@item.CreatedDate.ToString("d MMM dddd HH:mm")</span>
                         </a>
