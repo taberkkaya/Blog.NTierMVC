@@ -53,21 +53,21 @@ namespace Blog.NTierMVC.Data.Migrations
                         new
                         {
                             Id = new Guid("c685c5ab-f989-4372-b46e-0bea49d44098"),
-                            ConcurrencyStamp = "ebb39d2b-f4c5-49fc-a50d-3fb981faf4d8",
+                            ConcurrencyStamp = "1bc0680d-ebaf-4f84-9b62-1982e8c7c921",
                             Name = "Superadmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = new Guid("97b28373-bf1c-4188-a833-03379fd3679f"),
-                            ConcurrencyStamp = "7445e600-6b2f-4268-aa17-e742b0c0fd1b",
+                            ConcurrencyStamp = "1f2496e9-b18d-405b-b9cc-c879d392d1d9",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("5e5b68dd-2512-4600-add0-882c842a8b56"),
-                            ConcurrencyStamp = "44359745-38a2-4ade-830f-ff2b91ada1be",
+                            ConcurrencyStamp = "e7b6d6c7-a4d6-49f2-91d3-77d81701e940",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -180,7 +180,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("cdd65005-d394-4b48-8ba4-c5526518f76f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a30bad0d-7b84-4f25-b335-9534d4c9bf46",
+                            ConcurrencyStamp = "ef4a4f39-65e7-4554-85bc-585ff7a4e06e",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "DUMMYUSER",
@@ -189,7 +189,7 @@ namespace Blog.NTierMVC.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                             NormalizedUserName = "superadmin@gmail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAELO8gns/USQ2rDfrRvUJvQelokpH1+vtXyYm7SPEc5bk/i1I3YZJrZd83SBdkAeR0A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDA+NAW5ENIPZBNTi1qRkJZ7nTz005va6VeA8RAU6AUFiV5V0shwx9leytdE9PVgLg==",
                             PhoneNumber = "+905439999999",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "00000000-0000-0000-0000-000000000000",
@@ -200,7 +200,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("5499dd26-468d-4606-be18-1abe347582ff"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cb53b8f5-14f2-413f-be34-8a5ea3d09a86",
+                            ConcurrencyStamp = "f4a24650-eb65-466c-993d-32e360bbee5a",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "DUMMYUSER",
@@ -209,7 +209,7 @@ namespace Blog.NTierMVC.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "admin@gmail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAohLEWKkGi5nS+Qda7SC9fQYnQSgu8D4GwUkK+/1NB4wlSnHSSjTdZYBVtIMRoajQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDxY9GvSaJszemasIrTAlWD0+HQGvJl8V9uA4shYYAAsqMSUQtF7+8aodyZbS87K+g==",
                             PhoneNumber = "+905438888888",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "00000000-0000-0000-0000-000000000000",
@@ -372,11 +372,11 @@ namespace Blog.NTierMVC.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b18d83ee-c7ee-4e8e-8c93-14479f587a3a"),
+                            Id = new Guid("93060fc8-1663-4157-a48b-9777883e67eb"),
                             CategoryId = new Guid("6da1aee9-4ceb-4f36-b668-97e94ffda000"),
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 15, 3, 32, 479, DateTimeKind.Local).AddTicks(9594),
+                            CreatedDate = new DateTime(2024, 8, 5, 19, 28, 50, 843, DateTimeKind.Local).AddTicks(8239),
                             ImageId = new Guid("644a194e-8811-474c-92e4-796d3140af23"),
                             IsDeleted = false,
                             Title = "What is Lorem Ipsum?",
@@ -385,11 +385,11 @@ namespace Blog.NTierMVC.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("19f1cde8-b9d7-41b5-880b-3d8073fa3bd4"),
+                            Id = new Guid("40db6a4f-4507-4bc1-a743-183b3ef3fe4c"),
                             CategoryId = new Guid("ffbf1647-f1e9-4cca-b37c-c0988cd73ab7"),
                             Content = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 15, 3, 32, 479, DateTimeKind.Local).AddTicks(9601),
+                            CreatedDate = new DateTime(2024, 8, 5, 19, 28, 50, 843, DateTimeKind.Local).AddTicks(8246),
                             ImageId = new Guid("cd6083ab-faa6-4a2c-bffa-1c01c46a7b71"),
                             IsDeleted = false,
                             Title = "Why do we use it?",
@@ -454,7 +454,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("6da1aee9-4ceb-4f36-b668-97e94ffda000"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 15, 3, 32, 480, DateTimeKind.Local).AddTicks(3404),
+                            CreatedDate = new DateTime(2024, 8, 5, 19, 28, 50, 844, DateTimeKind.Local).AddTicks(1773),
                             IsDeleted = false,
                             Name = "What is Lorem Ipsum?"
                         },
@@ -462,7 +462,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("ffbf1647-f1e9-4cca-b37c-c0988cd73ab7"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 15, 3, 32, 480, DateTimeKind.Local).AddTicks(3407),
+                            CreatedDate = new DateTime(2024, 8, 5, 19, 28, 50, 844, DateTimeKind.Local).AddTicks(1777),
                             IsDeleted = false,
                             Name = "Why do we use it?"
                         });
@@ -513,7 +513,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("644a194e-8811-474c-92e4-796d3140af23"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 15, 3, 32, 480, DateTimeKind.Local).AddTicks(4223),
+                            CreatedDate = new DateTime(2024, 8, 5, 19, 28, 50, 844, DateTimeKind.Local).AddTicks(2378),
                             FileName = "Test",
                             FileType = "jpg",
                             IsDeleted = false
@@ -522,7 +522,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("cd6083ab-faa6-4a2c-bffa-1c01c46a7b71"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 15, 3, 32, 480, DateTimeKind.Local).AddTicks(4226),
+                            CreatedDate = new DateTime(2024, 8, 5, 19, 28, 50, 844, DateTimeKind.Local).AddTicks(2382),
                             FileName = "Lorem_Ipsum",
                             FileType = "png",
                             IsDeleted = false
@@ -583,7 +583,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("eeab62c1-e84e-4527-8482-052d8b8c1760"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 15, 3, 32, 481, DateTimeKind.Local).AddTicks(2744),
+                            CreatedDate = new DateTime(2024, 8, 5, 19, 28, 50, 844, DateTimeKind.Local).AddTicks(9229),
                             Icon = "fa-brands fa-github",
                             IsDeleted = false,
                             Name = "Github",
@@ -593,7 +593,7 @@ namespace Blog.NTierMVC.Data.Migrations
                         {
                             Id = new Guid("a7ea51b6-550d-40b6-a66a-e7a4e85344e0"),
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2024, 8, 5, 15, 3, 32, 481, DateTimeKind.Local).AddTicks(2747),
+                            CreatedDate = new DateTime(2024, 8, 5, 19, 28, 50, 844, DateTimeKind.Local).AddTicks(9232),
                             Icon = "fa-brands fa-github",
                             IsDeleted = false,
                             Name = "Github",

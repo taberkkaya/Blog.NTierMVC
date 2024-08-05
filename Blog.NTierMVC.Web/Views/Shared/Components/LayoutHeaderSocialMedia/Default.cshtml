@@ -1,0 +1,16 @@
+﻿@using Blog.NTierMVC.Entity.Entities
+@model List<SocialMedia>
+
+
+<div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ml-auto">
+        @foreach(var item in Model)
+        {
+            <li class="nav-item active">
+                <a class="nav-link" target="_blank" href="@item.Url">
+                    <i style="font-size:22px" class="@item.Icon"></i>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
