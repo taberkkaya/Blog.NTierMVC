@@ -1,0 +1,11 @@
+﻿@using Blog.NTierMVC.Entity.Entities
+@model List<SocialMedia>
+
+<div class="col-lg-12">
+    <ul class="social-icons">
+        @foreach(var item in Model)
+        {
+        <li><a href="@item.Url" target="_blank">@item.Name</a></li>
+        }
+    </ul>
+</div>
