@@ -1,4 +1,4 @@
-* # Blog.NTierMVC
+# Blog.NTierMVC
 
 ## 🚀 Technologies  
 - .NET Core MVC  
